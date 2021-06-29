@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    margin: 0; 
+    height: 100vh; 
+    overflow: hidden;
+}
+.work-place {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr 14fr 1fr;
+    grid-template-rows: 1fr 18fr 1fr;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.menu {
+    background-color: rgb(97, 97, 97);
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+.tool-bar {
+    background-color: rgb(97, 97, 97);
+}
+.tool-bar .tools .tool.active {
+    background-color: rgb(30, 184, 163);
+}
+.tools i {
+    font-size: 1.2rem;
+}
+.canvas-wrapper {
+    background-color: rgb(199, 199, 199);
+
+    border: 0;
+    box-sizing: border-box;
+}
+canvas {
+    cursor: pointer;
+    /* background-color: #FFFFFF; */
+}
+.tool-settings {
+    background-color:rgb(97, 97, 97);
+}
+footer {
+    background-color: rgb(97, 97, 97);
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+/*COLOR-PICKER/*

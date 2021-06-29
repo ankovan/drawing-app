@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Shapevis</title>
+    <link href="index.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous"/>
+    <script type="text/javascript" src="index.js"></script>
+  </head>
+  <body>
+    <div class="work-place">
+      <div id="menu" class="menu">
+        <button id="save">Save</button>
+        <button onclick="clear_canvas()">Clear</button>
+        <button onclick="undo_last()">Undo</button>
+        <button onclick="redo_next()">Redo</button>
+      </div>
+      <div id="tool-bar" class="tool-bar">
+        <div class="tools">
+          <button class="tool active" onclick="sketch()" id ="pencil"><i class="fas fa-pen"></i></button> 
+          <button class="tool" onclick="paint()" id ="brush"><i class="fas fa-paint-brush"></i></button>
+          <button class="tool" onclick="erase()" id ="eraser"><i class="fas fa-eraser"></i></button>
+        </div>  
+      </div>
+      <div class="canvas-wrapper">
+        <canvas id="canvas" width="1000px" height="500px"></canvas>
+      </div>
+      <div id="tool-settings" class="tool-settings">
+        <input id="color-picker" oninput="change_color(this.value)" type="color" class="color-picker">
+        <input onchange="rangeChanged(this.value)" id="range" oninput="set_size()" type="range" min="1" max="100" class="drawing_width">
+        <p id="range-value"></p>
+      </div>
+      <footer id="footer"></footer>
+    </div>
+  </body>
+</html>

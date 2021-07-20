@@ -9,6 +9,8 @@ let toolbarElement;
 let menuElement;
 let toolSettingsElement;
 let footerElement;
+let colorButton;
+let colorDiv;
 
 const PENCIL_DEFAULT_WIDTH = 1;
 const BRUSH_DEFAULT_WIDTH = 5;
@@ -16,8 +18,15 @@ const ERASER_DEFAULT_WIDTH = 3;
 const TOOLS = ["pencil", "brush", "eraser"];
 let active_tool = "pencil";
 
+function colorButtonOnChange() {
+    colorDiv.innerHTML = colorButton.value;
+    colorDiv.style.color = colorButton.value;
+    draw_color = colorButton.value;
+}
+
 function resizeCanvas(canvas) {
     let temp = ctx.getImageData(0,0,canvas.width,canvas.height);
+
     // const parent = canvas.parentElement;
     // console.log(parent.offsetWidth, parent.offsetHeight);
     // canvas.width = parent.offsetWidth;
@@ -28,26 +37,9 @@ function resizeCanvas(canvas) {
 }
 
 function getMouesPosition(e) {
-    let mouseX = e.offsetX * canvas.width / canvas.clientWidth | 0;
-    let mouseY = e.offsetY * canvas.height / canvas.clientHeight | 0;
-    if (
-        e.target == toolbarElement
-        || e.target == menuElement
-        || e.target.closest("#tool-bar") == toolbarElement
-        || e.target.closest("#menu") == menuElement
-    ) {
-        const canvasPosition = canvas.getBoundingClientRect()
-        mouseX = mouseX - canvasPosition.x | 0;
-        mouseY = mouseY - canvasPosition.y | 0;
-    } else if (
-        e.target == toolSettingsElement
-        || e.target.closest("#tool-settings") == toolSettingsElement
-        || e.target == footerElement
-        || e.target.closest("#footer") == footerElement
-    ) {
-        mouseX = -1;
-        mouseY = -1;
-    }
+    const canvasPosition = canvas.getBoundingClientRect()
+    let mouseX = (e.pageX * canvas.width / canvas.clientWidth | 0) - canvasPosition.x | 0;
+    let mouseY = (e.pageY * canvas.height / canvas.clientHeight | 0) - canvasPosition.y | 0;
     return {x: mouseX, y: mouseY};
 }
 
@@ -129,6 +121,11 @@ window.addEventListener("load", () => {
     canvas.addEventListener("mousemove", draw);
     {const saveButton = document.getElementById('save');
     saveButton.addEventListener('click', () => save(canvas));
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    resizeCanvas(canvas);
+    colorButton = document.getElementById("primary_color");
+    colorDiv = document.getElementById("color_val");
   };
 });
 window.addEventListener("resize", () => {
@@ -172,14 +169,14 @@ function erase() {
     rangeChanged(drawing_width);
 }
 function sketch() {
-    draw_color = document.getElementById("color-picker").value;
+    draw_color = colorButton.value;
     drawing_width = PENCIL_DEFAULT_WIDTH;
     document.getElementById("range").value = drawing_width;
     changeActiveTool("pencil");
     rangeChanged(drawing_width);
 }
 function paint() {
-    draw_color = document.getElementById("color-picker").value;
+    draw_color = colorButton.value
     drawing_width = BRUSH_DEFAULT_WIDTH;
     document.getElementById("range").value = drawing_width;
     changeActiveTool("brush");
@@ -207,7 +204,10 @@ function redo_next() {
 }
 }
 function rangeChanged(value) {
-document.getElementById("range-value").innerHTML = value;
+    const rangeBlob = document.getElementById("range-blob")
+    rangeBlob.innerHTML = value;
+    rangeBlob.style.left = value + "%";
+    drawing_width = value;
 }
 function save(canvas) {
     const data = canvas.toDataURL('image/png');
@@ -215,8 +215,9 @@ function save(canvas) {
     anchor.href = data;
     anchor.download = 'image.png';
     anchor.click();
-  }
+}
 
 
   //COLOR-PICKER
+  
   
